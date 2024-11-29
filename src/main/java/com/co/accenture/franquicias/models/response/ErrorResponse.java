@@ -4,6 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Clase que representa la respuesta de error
+ * 
+ * @version 1.0
+ * @autor Daniel Garcia
+ * @since 2024/11/28
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

@@ -1,4 +1,4 @@
-package com.co.accenture.franquicias.repository;
+package com.co.accenture.franquicias.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

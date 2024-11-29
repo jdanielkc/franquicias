@@ -38,5 +38,5 @@ public class Sucursal {
 
     @ManyToOne
     @JoinColumn(name = "franquicia_id", nullable = false)
-    private Franquicia franquiciaId;
+    private Franquicia franquicia;
 }

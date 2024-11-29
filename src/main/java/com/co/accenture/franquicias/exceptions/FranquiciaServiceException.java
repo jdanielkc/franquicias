@@ -1,7 +1,7 @@
 package com.co.accenture.franquicias.exceptions;
 
 /**
- * Clase que representa una excepción personalizada
+ * Clase que representa una excepción personalizada para el servicio de franquicias
  * 
  * @version 1.0
  * @autor Daniel Garcia

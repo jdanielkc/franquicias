@@ -1,5 +1,12 @@
 package com.co.accenture.franquicias.exceptions;
 
+/**
+ * Clase que representa una excepción personalizada para duplicidad de franquicias
+ * 
+ * @version 1.0
+ * @autor Daniel Garcia
+ * @since 2024/11/28
+ */
 public class FranquiciaDuplicadaException extends RuntimeException {
     private String message2;
 

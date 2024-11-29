@@ -10,6 +10,13 @@ import com.co.accenture.franquicias.exceptions.FranquiciaDuplicadaException;
 import com.co.accenture.franquicias.exceptions.FranquiciaServiceException;
 import com.co.accenture.franquicias.models.response.ErrorResponse;
 
+/**
+ * Controlador de excepciones
+ * 
+ * @version 1.0
+ * @autor Daniel Garcia
+ * @since 2024/11/28
+ */
 @RestControllerAdvice
 public class HandlerExceptionController {
 
