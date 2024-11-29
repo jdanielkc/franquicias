@@ -33,7 +33,7 @@ public class Producto {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "nombre")
+    @Column(name = "nombre", unique = true)
     private String nombre;
 
     @Column(name = "stock")
