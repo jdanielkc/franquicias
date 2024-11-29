@@ -6,12 +6,14 @@ import org.springframework.http.ResponseEntity;
 
 import com.co.accenture.franquicias.exceptions.FranquiciaServiceException;
 import com.co.accenture.franquicias.models.request.ActualizarFranqRequest;
+import com.co.accenture.franquicias.models.request.ActualizarProdRequest;
 import com.co.accenture.franquicias.models.request.ActualizarStockRequest;
 import com.co.accenture.franquicias.models.request.ActualizarSucuResquest;
 import com.co.accenture.franquicias.models.request.NuevaFranquiciaRequest;
 import com.co.accenture.franquicias.models.request.NuevaSucursalRequest;
 import com.co.accenture.franquicias.models.request.NuevoProductoRequest;
 import com.co.accenture.franquicias.models.response.ActualizarFranqResponse;
+import com.co.accenture.franquicias.models.response.ActualizarProdResponse;
 import com.co.accenture.franquicias.models.response.ActualizarStockResponse;
 import com.co.accenture.franquicias.models.response.ActualizarSucuResponse;
 import com.co.accenture.franquicias.models.response.BorrarProductoResponse;
@@ -49,5 +51,7 @@ public interface IFranquiciaService {
 
         ResponseEntity<ActualizarSucuResponse> actualizarNombreSucu(String idSucursal, ActualizarSucuResquest body)
                         throws FranquiciaServiceException;
+
+        ResponseEntity<ActualizarProdResponse> actualizarNombreProd(String id, ActualizarProdRequest body) throws FranquiciaServiceException;
 
 }
