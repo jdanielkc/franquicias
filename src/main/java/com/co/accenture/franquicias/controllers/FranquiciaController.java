@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.co.accenture.franquicias.exceptions.FranquiciaServiceException;
 import com.co.accenture.franquicias.models.request.NuevaFranquiciaRequest;
 import com.co.accenture.franquicias.models.response.NuevaFranquiciaResponse;
 import com.co.accenture.franquicias.services.IFranquiciaService;
@@ -32,9 +33,11 @@ public class FranquiciaController {
      * 
      * @param body
      * @return ResponseEntity<NuevaFranquiciaResponse>
+     * @throws FranquiciaServiceException
      */
     @PostMapping("/nueva-franquicia")
-    public ResponseEntity<NuevaFranquiciaResponse> addFranquicia(@RequestBody NuevaFranquiciaRequest request) {
+    public ResponseEntity<NuevaFranquiciaResponse> addFranquicia(@RequestBody NuevaFranquiciaRequest request)
+            throws FranquiciaServiceException {
         return franquiciaService.addFranquicia(request);
     }
 

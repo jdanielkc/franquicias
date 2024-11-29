@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class NuevaFranquiciaResponse {
+public class ErrorResponse {
     private String mensaje;
-    private int idFranquicia;
+    private String mensaje2;
 }

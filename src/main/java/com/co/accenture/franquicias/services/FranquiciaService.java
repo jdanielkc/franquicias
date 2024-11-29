@@ -1,10 +1,13 @@
 package com.co.accenture.franquicias.services;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.co.accenture.franquicias.entities.Franquicia;
+import com.co.accenture.franquicias.exceptions.FranquiciaDuplicadaException;
+import com.co.accenture.franquicias.exceptions.FranquiciaServiceException;
 import com.co.accenture.franquicias.models.request.NuevaFranquiciaRequest;
 import com.co.accenture.franquicias.models.response.NuevaFranquiciaResponse;
 import com.co.accenture.franquicias.repository.FranquiciaRepository;
@@ -25,17 +28,25 @@ public class FranquiciaService implements IFranquiciaService {
     // Inyección por constructor
     private final FranquiciaRepository franquiciaRepository;
 
+
     @Override
     @Transactional
-    public ResponseEntity<NuevaFranquiciaResponse> addFranquicia(NuevaFranquiciaRequest request) {
-        Franquicia franquicia = new Franquicia();
-        franquicia.setNombre(request.getNombre());
-        franquiciaRepository.save(franquicia);
+    public ResponseEntity<NuevaFranquiciaResponse> addFranquicia(NuevaFranquiciaRequest request)
+            throws FranquiciaServiceException {
 
-        StringBuilder mensaje = new StringBuilder();
-        mensaje.append("La franquicia ");
-        mensaje.append(franquicia.getNombre());
-        mensaje.append(" ha sido creada exitosamente");
-        return ResponseEntity.status(HttpStatus.CREATED).body(new NuevaFranquiciaResponse(mensaje.toString()));
+        try {
+            Franquicia franquicia = new Franquicia();
+            franquicia.setNombre(request.getNombre());
+            franquiciaRepository.save(franquicia);
+
+            StringBuilder mensaje = new StringBuilder();
+            mensaje.append("La franquicia ");
+            mensaje.append(franquicia.getNombre());
+            mensaje.append(" ha sido creada exitosamente");
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(new NuevaFranquiciaResponse(mensaje.toString(), franquicia.getId()));
+        } catch (DataIntegrityViolationException e) {
+            throw new FranquiciaDuplicadaException(e.getMessage(), "La franquicia ya existe");
+        }
     }
 }
