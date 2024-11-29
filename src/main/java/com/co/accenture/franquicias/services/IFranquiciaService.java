@@ -6,6 +6,7 @@ import com.co.accenture.franquicias.exceptions.FranquiciaServiceException;
 import com.co.accenture.franquicias.models.request.NuevaFranquiciaRequest;
 import com.co.accenture.franquicias.models.request.NuevaSucursalRequest;
 import com.co.accenture.franquicias.models.request.NuevoProductoRequest;
+import com.co.accenture.franquicias.models.response.BorrarProductoResponse;
 import com.co.accenture.franquicias.models.response.NuevaFranquiciaResponse;
 import com.co.accenture.franquicias.models.response.NuevaSucursalResponse;
 import com.co.accenture.franquicias.models.response.NuevoProductoResponse;
@@ -21,6 +22,8 @@ public interface IFranquiciaService {
 
     ResponseEntity<NuevaSucursalResponse> addSucursal(NuevaSucursalRequest request) throws FranquiciaServiceException;
 
-    ResponseEntity<NuevoProductoResponse> addProducto(NuevoProductoRequest re) throws FranquiciaServiceException;
+    ResponseEntity<NuevoProductoResponse> addProducto(NuevoProductoRequest request) throws FranquiciaServiceException;
+
+    ResponseEntity<BorrarProductoResponse> deleteProducto(int idProducto) throws FranquiciaServiceException;
 
 }

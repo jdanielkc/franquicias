@@ -13,6 +13,7 @@ import com.co.accenture.franquicias.exceptions.NombreDuplicadoException;
 import com.co.accenture.franquicias.models.request.NuevaFranquiciaRequest;
 import com.co.accenture.franquicias.models.request.NuevaSucursalRequest;
 import com.co.accenture.franquicias.models.request.NuevoProductoRequest;
+import com.co.accenture.franquicias.models.response.BorrarProductoResponse;
 import com.co.accenture.franquicias.models.response.NuevaFranquiciaResponse;
 import com.co.accenture.franquicias.models.response.NuevaSucursalResponse;
 import com.co.accenture.franquicias.models.response.NuevoProductoResponse;
@@ -138,5 +139,29 @@ public class FranquiciaService implements IFranquiciaService {
         } catch (DataIntegrityViolationException e) {
             throw new NombreDuplicadoException(e.getMessage(), "El producto ya existe");
         }
+    }
+
+    /**
+     * Método que permite eliminar un producto
+     * 
+     * @param idProducto
+     * @return ResponseEntity<BorrarProductoResponse>
+     * @throws FranquiciaServiceException
+     */
+    @Override
+    @Transactional
+    public ResponseEntity<BorrarProductoResponse> deleteProducto(int idProducto)
+            throws FranquiciaServiceException {
+        // Obtener producto por id
+        Producto producto = productoRepository.findById(idProducto)
+                .orElseThrow(() -> new FranquiciaServiceException("El producto no existe", "El producto no existe"));
+
+        // Eliminar producto
+        productoRepository.delete(producto);
+        StringBuilder mensaje = new StringBuilder();
+        mensaje.append("El producto ");
+        mensaje.append(producto.getNombre());
+        mensaje.append(" ha sido eliminado exitosamente");
+        return ResponseEntity.status(HttpStatus.OK).body(new BorrarProductoResponse(mensaje.toString()));
     }
 }

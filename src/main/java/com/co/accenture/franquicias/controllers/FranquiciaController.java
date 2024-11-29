@@ -1,6 +1,8 @@
 package com.co.accenture.franquicias.controllers;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +12,7 @@ import com.co.accenture.franquicias.exceptions.FranquiciaServiceException;
 import com.co.accenture.franquicias.models.request.NuevaFranquiciaRequest;
 import com.co.accenture.franquicias.models.request.NuevaSucursalRequest;
 import com.co.accenture.franquicias.models.request.NuevoProductoRequest;
+import com.co.accenture.franquicias.models.response.BorrarProductoResponse;
 import com.co.accenture.franquicias.models.response.NuevaFranquiciaResponse;
 import com.co.accenture.franquicias.models.response.NuevaSucursalResponse;
 import com.co.accenture.franquicias.models.response.NuevoProductoResponse;
@@ -53,7 +56,8 @@ public class FranquiciaController {
      * @throws FranquiciaServiceException
      */
     @PostMapping("/nueva-sucursal")
-    public ResponseEntity<NuevaSucursalResponse> addSucursal(@RequestBody NuevaSucursalRequest request) throws FranquiciaServiceException {
+    public ResponseEntity<NuevaSucursalResponse> addSucursal(@RequestBody NuevaSucursalRequest request)
+            throws FranquiciaServiceException {
         return franquiciaService.addSucursal(request);
     }
 
@@ -65,8 +69,22 @@ public class FranquiciaController {
      * @throws FranquiciaServiceException
      */
     @PostMapping("/nuevo-producto")
-    public ResponseEntity<NuevoProductoResponse> addProducto(@RequestBody NuevoProductoRequest request) throws FranquiciaServiceException {
+    public ResponseEntity<NuevoProductoResponse> addProducto(@RequestBody NuevoProductoRequest request)
+            throws FranquiciaServiceException {
         return franquiciaService.addProducto(request);
     }
-    
+
+    /**
+     * Método que permite eliminar un producto
+     * 
+     * @param request
+     * @return ResponseEntity<String>
+     * @throws FranquiciaServiceException
+     */
+    @DeleteMapping("/eliminar-producto/{idProducto}")
+    public ResponseEntity<BorrarProductoResponse> deleteProducto(@PathVariable int idProducto)
+            throws FranquiciaServiceException {
+        return franquiciaService.deleteProducto(idProducto);
+    }
+
 }
