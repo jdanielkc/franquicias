@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.co.accenture.franquicias.exceptions.FranquiciaServiceException;
+import com.co.accenture.franquicias.models.request.ActualizarStockRequest;
 import com.co.accenture.franquicias.models.request.NuevaFranquiciaRequest;
 import com.co.accenture.franquicias.models.request.NuevaSucursalRequest;
 import com.co.accenture.franquicias.models.request.NuevoProductoRequest;
+import com.co.accenture.franquicias.models.response.ActualizarStockResponse;
 import com.co.accenture.franquicias.models.response.BorrarProductoResponse;
 import com.co.accenture.franquicias.models.response.NuevaFranquiciaResponse;
 import com.co.accenture.franquicias.models.response.NuevaSucursalResponse;
@@ -19,6 +21,7 @@ import com.co.accenture.franquicias.models.response.NuevoProductoResponse;
 import com.co.accenture.franquicias.services.IFranquiciaService;
 
 import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.PutMapping;
 
 /**
  * Controlador de la API
@@ -85,6 +88,21 @@ public class FranquiciaController {
     public ResponseEntity<BorrarProductoResponse> deleteProducto(@PathVariable int idProducto)
             throws FranquiciaServiceException {
         return franquiciaService.deleteProducto(idProducto);
+    }
+
+    /**
+     * Método que permite actualizar el stock de un producto
+     * 
+     * @param idProducto
+     * @param body
+     * @return ResponseEntity<ActualizarStockResponse>
+     * @throws FranquiciaServiceException
+     * @throws NumberFormatException
+     */
+    @PutMapping("modificar-stock/{idProducto}")
+    public ResponseEntity<ActualizarStockResponse> actualizarStock(@PathVariable String idProducto,
+            @RequestBody ActualizarStockRequest body) throws FranquiciaServiceException {
+        return franquiciaService.actualizarStock(idProducto, body);
     }
 
 }

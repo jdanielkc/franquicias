@@ -3,9 +3,11 @@ package com.co.accenture.franquicias.services;
 import org.springframework.http.ResponseEntity;
 
 import com.co.accenture.franquicias.exceptions.FranquiciaServiceException;
+import com.co.accenture.franquicias.models.request.ActualizarStockRequest;
 import com.co.accenture.franquicias.models.request.NuevaFranquiciaRequest;
 import com.co.accenture.franquicias.models.request.NuevaSucursalRequest;
 import com.co.accenture.franquicias.models.request.NuevoProductoRequest;
+import com.co.accenture.franquicias.models.response.ActualizarStockResponse;
 import com.co.accenture.franquicias.models.response.BorrarProductoResponse;
 import com.co.accenture.franquicias.models.response.NuevaFranquiciaResponse;
 import com.co.accenture.franquicias.models.response.NuevaSucursalResponse;
@@ -25,5 +27,7 @@ public interface IFranquiciaService {
     ResponseEntity<NuevoProductoResponse> addProducto(NuevoProductoRequest request) throws FranquiciaServiceException;
 
     ResponseEntity<BorrarProductoResponse> deleteProducto(int idProducto) throws FranquiciaServiceException;
+
+    ResponseEntity<ActualizarStockResponse> actualizarStock(String idProducto, ActualizarStockRequest body) throws FranquiciaServiceException;
 
 }

@@ -10,9 +10,11 @@ import com.co.accenture.franquicias.entities.Producto;
 import com.co.accenture.franquicias.entities.Sucursal;
 import com.co.accenture.franquicias.exceptions.FranquiciaServiceException;
 import com.co.accenture.franquicias.exceptions.NombreDuplicadoException;
+import com.co.accenture.franquicias.models.request.ActualizarStockRequest;
 import com.co.accenture.franquicias.models.request.NuevaFranquiciaRequest;
 import com.co.accenture.franquicias.models.request.NuevaSucursalRequest;
 import com.co.accenture.franquicias.models.request.NuevoProductoRequest;
+import com.co.accenture.franquicias.models.response.ActualizarStockResponse;
 import com.co.accenture.franquicias.models.response.BorrarProductoResponse;
 import com.co.accenture.franquicias.models.response.NuevaFranquiciaResponse;
 import com.co.accenture.franquicias.models.response.NuevaSucursalResponse;
@@ -154,7 +156,7 @@ public class FranquiciaService implements IFranquiciaService {
             throws FranquiciaServiceException {
         // Obtener producto por id
         Producto producto = productoRepository.findById(idProducto)
-                .orElseThrow(() -> new FranquiciaServiceException("El producto no existe", "El producto no existe"));
+                .orElseThrow(() -> new FranquiciaServiceException("El producto a eliminar no existe", "El producto a eliminar no existe"));
 
         // Eliminar producto
         productoRepository.delete(producto);
@@ -163,5 +165,33 @@ public class FranquiciaService implements IFranquiciaService {
         mensaje.append(producto.getNombre());
         mensaje.append(" ha sido eliminado exitosamente");
         return ResponseEntity.status(HttpStatus.OK).body(new BorrarProductoResponse(mensaje.toString()));
+    }
+
+    /**
+     * Método que permite actualizar el stock de un producto
+     * 
+     * @param idProducto
+     * @param body
+     * @return ResponseEntity<ActualizarStockResponse>
+     * @throws FranquiciaServiceException
+     * @throws NumberFormatException
+     */
+    @Override
+    @Transactional
+    public ResponseEntity<ActualizarStockResponse> actualizarStock(String idProducto, ActualizarStockRequest body) throws FranquiciaServiceException {
+        // obtener producto por id
+        Producto producto = productoRepository.findById(Integer.parseInt(idProducto))
+                .orElseThrow(() -> new FranquiciaServiceException("El producto no existe", "El producto no existe"));
+
+        // Actualizar stock
+        producto.setStock(body.getNuevoStock());
+        productoRepository.save(producto);
+
+        StringBuilder mensaje = new StringBuilder();
+        mensaje.append("El stock del producto ");
+        mensaje.append(producto.getNombre());
+        mensaje.append(" ha sido actualizado a ");
+        mensaje.append(producto.getStock());
+        return ResponseEntity.status(HttpStatus.OK).body(new ActualizarStockResponse(mensaje.toString()));
     }
 }
