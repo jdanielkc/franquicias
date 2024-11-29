@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,6 +34,7 @@ public class Sucursal {
     @Column(name = "nombre")
     private String nombre;
 
-    @Column(name = "franquicia_id")
+    @ManyToOne
+    @JoinColumn(name = "franquicia_id", nullable = false)
     private int franquiciaId;
 }
