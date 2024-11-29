@@ -1,5 +1,6 @@
 services:
   prueba-tecnica-api:
+    build: .
     image: prueba-tecnica-api
     container_name: spring-franquicia-api
     ports:
