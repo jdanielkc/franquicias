@@ -1,9 +1,14 @@
 package com.co.accenture.franquicias.services;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.co.accenture.franquicias.entities.Franquicia;
 import com.co.accenture.franquicias.entities.Producto;
@@ -19,11 +24,12 @@ import com.co.accenture.franquicias.models.response.BorrarProductoResponse;
 import com.co.accenture.franquicias.models.response.NuevaFranquiciaResponse;
 import com.co.accenture.franquicias.models.response.NuevaSucursalResponse;
 import com.co.accenture.franquicias.models.response.NuevoProductoResponse;
+import com.co.accenture.franquicias.models.response.ProductoMayorStockResponse;
 import com.co.accenture.franquicias.repositories.FranquiciaRepository;
 import com.co.accenture.franquicias.repositories.ProductoRepository;
 import com.co.accenture.franquicias.repositories.SucursalRepository;
 
-import jakarta.transaction.Transactional;
+
 import lombok.AllArgsConstructor;
 
 /**
@@ -193,5 +199,41 @@ public class FranquiciaService implements IFranquiciaService {
         mensaje.append(" ha sido actualizado a ");
         mensaje.append(producto.getStock());
         return ResponseEntity.status(HttpStatus.OK).body(new ActualizarStockResponse(mensaje.toString()));
+    }
+
+    /**
+     * Método que permite obtener el producto con mayor stock por sucursal
+     * 
+     * @param idFranquicia
+     * @return ResponseEntity<List<ProductoMayorStockResponse>>
+     * @throws FranquiciaServiceException
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public ResponseEntity<List<ProductoMayorStockResponse>> obtenerProductoMayorStockPorSucursal(int idFranquicia) throws FranquiciaServiceException {
+        // Verificar que la franquicia existe
+        Franquicia franquicia = franquiciaRepository.findById(idFranquicia)
+                .orElseThrow(() -> new FranquiciaServiceException("La franquicia especificada no existe", "La franquicia especificada no existe"));
+
+        // Obtener las sucursales de la franquicia
+        List<Sucursal> sucursales = sucursalRepository.findByFranquicia(franquicia);
+
+        List<ProductoMayorStockResponse> resultado = new ArrayList<>();
+
+        // Para cada sucursal, obtener el producto con mayor stock
+        for (Sucursal sucursal : sucursales) {
+            Optional<Producto> productoOpt = productoRepository.findTopBySucursalOrderByStockDesc(sucursal);
+            if (productoOpt.isPresent()) {
+                Producto producto = productoOpt.get();
+                ProductoMayorStockResponse response = new ProductoMayorStockResponse();
+                response.setIdProducto(producto.getId());
+                response.setNombreProducto(producto.getNombre());
+                response.setStock(producto.getStock());
+                response.setIdSucursal(sucursal.getId());
+                response.setNombreSucursal(sucursal.getNombre());
+                resultado.add(response);
+            }
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(resultado);
     }
 }
