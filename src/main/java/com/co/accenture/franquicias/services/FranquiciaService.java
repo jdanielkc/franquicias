@@ -15,11 +15,13 @@ import com.co.accenture.franquicias.exceptions.FranquiciaServiceException;
 import com.co.accenture.franquicias.exceptions.NombreDuplicadoException;
 import com.co.accenture.franquicias.models.request.ActualizarFranqRequest;
 import com.co.accenture.franquicias.models.request.ActualizarStockRequest;
+import com.co.accenture.franquicias.models.request.ActualizarSucuResquest;
 import com.co.accenture.franquicias.models.request.NuevaFranquiciaRequest;
 import com.co.accenture.franquicias.models.request.NuevaSucursalRequest;
 import com.co.accenture.franquicias.models.request.NuevoProductoRequest;
 import com.co.accenture.franquicias.models.response.ActualizarFranqResponse;
 import com.co.accenture.franquicias.models.response.ActualizarStockResponse;
+import com.co.accenture.franquicias.models.response.ActualizarSucuResponse;
 import com.co.accenture.franquicias.models.response.BorrarProductoResponse;
 import com.co.accenture.franquicias.models.response.NuevaFranquiciaResponse;
 import com.co.accenture.franquicias.models.response.NuevaSucursalResponse;
@@ -246,5 +248,34 @@ public class FranquiciaService implements IFranquiciaService {
         mensaje.append(" ha sido actualizado a ");
         mensaje.append(franquicia.getNombre());
         return ResponseEntity.status(HttpStatus.OK).body(new ActualizarFranqResponse(mensaje.toString()));
+    }
+
+    /**
+     * Método que permite actualizar el nombre de una sucursal
+     * 
+     * @param idSucursal
+     * @param body
+     * @return ResponseEntity<ActualizarSucuResponse>
+     * @throws FranquiciaServiceException
+     */
+    @Override
+    @Transactional
+    public ResponseEntity<ActualizarSucuResponse> actualizarNombreSucu(String idSucursal, ActualizarSucuResquest body)
+            throws FranquiciaServiceException {
+        // Obtener sucursal por id
+        Sucursal sucursal = sucursalRepository.findById(Integer.parseInt(idSucursal))
+                .orElseThrow(() -> new FranquiciaServiceException("La sucursal a actualizar no existe", "La sucursal a actualizar no existe"));
+        
+        String nombreAnterior = sucursal.getNombre();
+        // Actualizar nombre
+        sucursal.setNombre(body.getNuevoNombre());
+        sucursalRepository.save(sucursal);
+
+        StringBuilder mensaje = new StringBuilder();
+        mensaje.append("El nombre de la sucursal ");
+        mensaje.append(nombreAnterior);
+        mensaje.append(" ha sido actualizado a ");
+        mensaje.append(sucursal.getNombre());
+        return ResponseEntity.status(HttpStatus.OK).body(new ActualizarSucuResponse(mensaje.toString()));
     }
 }
