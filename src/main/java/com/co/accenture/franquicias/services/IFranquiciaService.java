@@ -1,5 +1,7 @@
 package com.co.accenture.franquicias.services;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 
 import com.co.accenture.franquicias.exceptions.FranquiciaServiceException;
@@ -12,6 +14,7 @@ import com.co.accenture.franquicias.models.response.BorrarProductoResponse;
 import com.co.accenture.franquicias.models.response.NuevaFranquiciaResponse;
 import com.co.accenture.franquicias.models.response.NuevaSucursalResponse;
 import com.co.accenture.franquicias.models.response.NuevoProductoResponse;
+import com.co.accenture.franquicias.models.response.ProductoMayorStockResponse;
 
 /**
  * Interfaz servicio de la franquicia
@@ -28,6 +31,9 @@ public interface IFranquiciaService {
 
     ResponseEntity<BorrarProductoResponse> deleteProducto(int idProducto) throws FranquiciaServiceException;
 
-    ResponseEntity<ActualizarStockResponse> actualizarStock(String idProducto, ActualizarStockRequest body) throws FranquiciaServiceException;
+    ResponseEntity<ActualizarStockResponse> actualizarStock(String idProducto, ActualizarStockRequest body)
+            throws FranquiciaServiceException;
+
+    ResponseEntity<List<ProductoMayorStockResponse>> obtenerProductoMayorStockPorSucursal(int idFranquicia) throws FranquiciaServiceException;
 
 }
