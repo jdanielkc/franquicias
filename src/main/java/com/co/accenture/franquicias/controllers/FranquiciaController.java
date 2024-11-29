@@ -14,11 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.co.accenture.franquicias.exceptions.FranquiciaServiceException;
 import com.co.accenture.franquicias.models.request.ActualizarFranqRequest;
 import com.co.accenture.franquicias.models.request.ActualizarStockRequest;
+import com.co.accenture.franquicias.models.request.ActualizarSucuResquest;
 import com.co.accenture.franquicias.models.request.NuevaFranquiciaRequest;
 import com.co.accenture.franquicias.models.request.NuevaSucursalRequest;
 import com.co.accenture.franquicias.models.request.NuevoProductoRequest;
 import com.co.accenture.franquicias.models.response.ActualizarFranqResponse;
 import com.co.accenture.franquicias.models.response.ActualizarStockResponse;
+import com.co.accenture.franquicias.models.response.ActualizarSucuResponse;
 import com.co.accenture.franquicias.models.response.BorrarProductoResponse;
 import com.co.accenture.franquicias.models.response.NuevaFranquiciaResponse;
 import com.co.accenture.franquicias.models.response.NuevaSucursalResponse;
@@ -138,4 +140,19 @@ public class FranquiciaController {
             @RequestBody ActualizarFranqRequest body) throws FranquiciaServiceException {
         return franquiciaService.actualizarNombreFranq(idFranquicia, body);
     }
+
+    /**
+     * Método que permite actualizar el nombre de una sucursal
+     * 
+     * @param idSucursal
+     * @param body
+     * @return ResponseEntity<ActualizarSucuResponse>
+     * @throws FranquiciaServiceException
+     */
+    @PutMapping("modificar-nombre-sucursal/{idSucursal}")
+    public ResponseEntity<ActualizarSucuResponse> actualizarNombreSucu(@PathVariable String idSucursal,
+            @RequestBody ActualizarSucuResquest body) throws FranquiciaServiceException {
+        return franquiciaService.actualizarNombreSucu(idSucursal, body);
+    }
+
 }
