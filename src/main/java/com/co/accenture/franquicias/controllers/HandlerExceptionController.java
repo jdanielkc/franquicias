@@ -2,6 +2,7 @@ package com.co.accenture.franquicias.controllers;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -30,7 +31,7 @@ public class HandlerExceptionController {
         log.info("STATUS: " + "ERROR");
         log.error("El servicio fallo por: {}", ex.getMessage(), ex);
         log.info(SEPARADOR);
-        return ResponseEntity.status(500).body(new ErrorResponse("Error en el servicio", ex.getMessage2()));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse("Error en el servicio", ex.getMessage2()));
     }
 
     @ExceptionHandler(NombreDuplicadoException.class)
@@ -40,6 +41,6 @@ public class HandlerExceptionController {
         log.info("STATUS: " + "ERROR");
         log.error("La franquicia ya existe: {}", ex.getMessage(), ex);
         log.info(SEPARADOR);
-        return ResponseEntity.status(400).body(new ErrorResponse("Error en el servicio", ex.getMessage2()));
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorResponse("Error en el servicio", ex.getMessage2()));
     }
 }
