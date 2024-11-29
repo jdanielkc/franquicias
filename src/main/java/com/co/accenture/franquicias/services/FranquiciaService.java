@@ -1,8 +1,6 @@
 package com.co.accenture.franquicias.services;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -28,7 +26,6 @@ import com.co.accenture.franquicias.models.response.ProductoMayorStockResponse;
 import com.co.accenture.franquicias.repositories.FranquiciaRepository;
 import com.co.accenture.franquicias.repositories.ProductoRepository;
 import com.co.accenture.franquicias.repositories.SucursalRepository;
-
 
 import lombok.AllArgsConstructor;
 
@@ -212,28 +209,11 @@ public class FranquiciaService implements IFranquiciaService {
     @Transactional(readOnly = true)
     public ResponseEntity<List<ProductoMayorStockResponse>> obtenerProductoMayorStockPorSucursal(int idFranquicia) throws FranquiciaServiceException {
         // Verificar que la franquicia existe
-        Franquicia franquicia = franquiciaRepository.findById(idFranquicia)
-                .orElseThrow(() -> new FranquiciaServiceException("La franquicia especificada no existe", "La franquicia especificada no existe"));
-
-        // Obtener las sucursales de la franquicia
-        List<Sucursal> sucursales = sucursalRepository.findByFranquicia(franquicia);
-
-        List<ProductoMayorStockResponse> resultado = new ArrayList<>();
-
-        // Para cada sucursal, obtener el producto con mayor stock
-        for (Sucursal sucursal : sucursales) {
-            Optional<Producto> productoOpt = productoRepository.findTopBySucursalOrderByStockDesc(sucursal);
-            if (productoOpt.isPresent()) {
-                Producto producto = productoOpt.get();
-                ProductoMayorStockResponse response = new ProductoMayorStockResponse();
-                response.setIdProducto(producto.getId());
-                response.setNombreProducto(producto.getNombre());
-                response.setStock(producto.getStock());
-                response.setIdSucursal(sucursal.getId());
-                response.setNombreSucursal(sucursal.getNombre());
-                resultado.add(response);
-            }
+        if (!franquiciaRepository.existsById(idFranquicia)) {
+            throw new FranquiciaServiceException("La franquicia especificada no existe", "La franquicia especificada no existe");
         }
+        // Obtener los productos con mayor stock por sucursal
+        List<ProductoMayorStockResponse> resultado = productoRepository.findProductosMayorStockPorFranquicia(idFranquicia);
         return ResponseEntity.status(HttpStatus.OK).body(resultado);
     }
 }
