@@ -43,7 +43,7 @@ public class FranquiciaController {
         return franquiciaService.addFranquicia(request);
     }
 
-    @PostMapping("path")
+    @PostMapping("/nueva-sucursal")
     public ResponseEntity<NuevaSucursalResponse> addSucursal(@RequestBody NuevaSucursalRequest request) {
         return franquiciaService.addSucursal(request);
     }

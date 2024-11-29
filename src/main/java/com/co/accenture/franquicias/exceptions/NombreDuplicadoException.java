@@ -7,15 +7,15 @@ package com.co.accenture.franquicias.exceptions;
  * @autor Daniel Garcia
  * @since 2024/11/28
  */
-public class FranquiciaDuplicadaException extends RuntimeException {
+public class NombreDuplicadoException extends RuntimeException {
     private String message2;
 
-    public FranquiciaDuplicadaException(String message, String message2) {
+    public NombreDuplicadoException(String message, String message2) {
         super(message);
         this.message2 = message2;
     }
 
-    public FranquiciaDuplicadaException() {
+    public NombreDuplicadoException() {
     }
 
     public String getMessage2() {

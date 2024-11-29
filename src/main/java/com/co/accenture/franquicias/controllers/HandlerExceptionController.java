@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.co.accenture.franquicias.exceptions.FranquiciaDuplicadaException;
+import com.co.accenture.franquicias.exceptions.NombreDuplicadoException;
 import com.co.accenture.franquicias.exceptions.FranquiciaServiceException;
 import com.co.accenture.franquicias.models.response.ErrorResponse;
 
@@ -32,8 +32,8 @@ public class HandlerExceptionController {
         return ResponseEntity.status(500).body(new ErrorResponse("Error en el servicio", ex.getMessage2()));
     }
 
-    @ExceptionHandler(FranquiciaDuplicadaException.class)
-    public ResponseEntity<ErrorResponse> transactionServiceException(FranquiciaDuplicadaException ex) {
+    @ExceptionHandler(NombreDuplicadoException.class)
+    public ResponseEntity<ErrorResponse> transactionServiceException(NombreDuplicadoException ex) {
         log.info("====================================================================");
         log.info("EXCEPTION");
         log.info("STATUS: " + "ERROR");
