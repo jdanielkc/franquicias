@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.co.accenture.franquicias.exceptions.FranquiciaServiceException;
+import com.co.accenture.franquicias.models.request.ActualizarFranqRequest;
 import com.co.accenture.franquicias.models.request.ActualizarStockRequest;
 import com.co.accenture.franquicias.models.request.NuevaFranquiciaRequest;
 import com.co.accenture.franquicias.models.request.NuevaSucursalRequest;
 import com.co.accenture.franquicias.models.request.NuevoProductoRequest;
+import com.co.accenture.franquicias.models.response.ActualizarFranqResponse;
 import com.co.accenture.franquicias.models.response.ActualizarStockResponse;
 import com.co.accenture.franquicias.models.response.BorrarProductoResponse;
 import com.co.accenture.franquicias.models.response.NuevaFranquiciaResponse;
@@ -121,5 +123,19 @@ public class FranquiciaController {
     public ResponseEntity<List<ProductoMayorStockResponse>> obtenerProductoMayorStockPorSucursal(
             @PathVariable int idFranquicia) throws FranquiciaServiceException {
         return franquiciaService.obtenerProductoMayorStockPorSucursal(idFranquicia);
+    }
+
+    /**
+     * Método que permite actualizar el nombre de una franquicia
+     * 
+     * @param idFranquicia
+     * @param body
+     * @return ResponseEntity<ActualizarFranqResponse>
+     * @throws FranquiciaServiceException
+     */
+    @PutMapping("modificar-nombre-franquicia/{idFranquicia}")
+    public ResponseEntity<ActualizarFranqResponse> actualizarNombreFranq(@PathVariable String idFranquicia,
+            @RequestBody ActualizarFranqRequest body) throws FranquiciaServiceException {
+        return franquiciaService.actualizarNombreFranq(idFranquicia, body);
     }
 }
