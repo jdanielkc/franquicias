@@ -20,25 +20,26 @@ import com.co.accenture.franquicias.models.response.ErrorResponse;
 @RestControllerAdvice
 public class HandlerExceptionController {
 
+    private static final String SEPARADOR = "====================================================================";
     private Logger log = LogManager.getLogger(this.getClass());
 
     @ExceptionHandler(FranquiciaServiceException.class)
     public ResponseEntity<ErrorResponse> transactionServiceException(FranquiciaServiceException ex) {
-        log.info("====================================================================");
+        log.info(SEPARADOR);
         log.info("EXCEPTION");
         log.info("STATUS: " + "ERROR");
         log.error("El servicio fallo por: {}", ex.getMessage(), ex);
-        log.info("====================================================================");
+        log.info(SEPARADOR);
         return ResponseEntity.status(500).body(new ErrorResponse("Error en el servicio", ex.getMessage2()));
     }
 
     @ExceptionHandler(NombreDuplicadoException.class)
     public ResponseEntity<ErrorResponse> transactionServiceException(NombreDuplicadoException ex) {
-        log.info("====================================================================");
+        log.info(SEPARADOR);
         log.info("EXCEPTION");
         log.info("STATUS: " + "ERROR");
         log.error("La franquicia ya existe: {}", ex.getMessage(), ex);
-        log.info("====================================================================");
+        log.info(SEPARADOR);
         return ResponseEntity.status(400).body(new ErrorResponse("Error en el servicio", ex.getMessage2()));
     }
 }
