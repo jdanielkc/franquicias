@@ -13,10 +13,12 @@ import com.co.accenture.franquicias.entities.Producto;
 import com.co.accenture.franquicias.entities.Sucursal;
 import com.co.accenture.franquicias.exceptions.FranquiciaServiceException;
 import com.co.accenture.franquicias.exceptions.NombreDuplicadoException;
+import com.co.accenture.franquicias.models.request.ActualizarFranqRequest;
 import com.co.accenture.franquicias.models.request.ActualizarStockRequest;
 import com.co.accenture.franquicias.models.request.NuevaFranquiciaRequest;
 import com.co.accenture.franquicias.models.request.NuevaSucursalRequest;
 import com.co.accenture.franquicias.models.request.NuevoProductoRequest;
+import com.co.accenture.franquicias.models.response.ActualizarFranqResponse;
 import com.co.accenture.franquicias.models.response.ActualizarStockResponse;
 import com.co.accenture.franquicias.models.response.BorrarProductoResponse;
 import com.co.accenture.franquicias.models.response.NuevaFranquiciaResponse;
@@ -215,5 +217,34 @@ public class FranquiciaService implements IFranquiciaService {
         // Obtener los productos con mayor stock por sucursal
         List<ProductoMayorStockResponse> resultado = productoRepository.findProductosMayorStockPorFranquicia(idFranquicia);
         return ResponseEntity.status(HttpStatus.OK).body(resultado);
+    }
+
+    /**
+     * Método que permite actualizar el nombre de una franquicia
+     * 
+     * @param idFranquicia
+     * @param body
+     * @return ResponseEntity<ActualizarFranqResponse>
+     * @throws FranquiciaServiceException
+     */
+    @Override
+    @Transactional
+    public ResponseEntity<ActualizarFranqResponse> actualizarNombreFranq(String idFranquicia,
+            ActualizarFranqRequest body) throws FranquiciaServiceException {
+        // Obtener franquicia por id
+        Franquicia franquicia = franquiciaRepository.findById(Integer.parseInt(idFranquicia))
+                .orElseThrow(() -> new FranquiciaServiceException("La franquicia a actualizar no existe", "La franquicia a actualizar no existe"));
+        String nombreAnterior = franquicia.getNombre();
+        // Actualizar nombre
+        
+        franquicia.setNombre(body.getNuevoNombre());
+        franquiciaRepository.save(franquicia);
+
+        StringBuilder mensaje = new StringBuilder();
+        mensaje.append("El nombre de la franquicia ");
+        mensaje.append(nombreAnterior);
+        mensaje.append(" ha sido actualizado a ");
+        mensaje.append(franquicia.getNombre());
+        return ResponseEntity.status(HttpStatus.OK).body(new ActualizarFranqResponse(mensaje.toString()));
     }
 }

@@ -5,10 +5,12 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 
 import com.co.accenture.franquicias.exceptions.FranquiciaServiceException;
+import com.co.accenture.franquicias.models.request.ActualizarFranqRequest;
 import com.co.accenture.franquicias.models.request.ActualizarStockRequest;
 import com.co.accenture.franquicias.models.request.NuevaFranquiciaRequest;
 import com.co.accenture.franquicias.models.request.NuevaSucursalRequest;
 import com.co.accenture.franquicias.models.request.NuevoProductoRequest;
+import com.co.accenture.franquicias.models.response.ActualizarFranqResponse;
 import com.co.accenture.franquicias.models.response.ActualizarStockResponse;
 import com.co.accenture.franquicias.models.response.BorrarProductoResponse;
 import com.co.accenture.franquicias.models.response.NuevaFranquiciaResponse;
@@ -34,6 +36,10 @@ public interface IFranquiciaService {
     ResponseEntity<ActualizarStockResponse> actualizarStock(String idProducto, ActualizarStockRequest body)
             throws FranquiciaServiceException;
 
-    ResponseEntity<List<ProductoMayorStockResponse>> obtenerProductoMayorStockPorSucursal(int idFranquicia) throws FranquiciaServiceException;
+    ResponseEntity<List<ProductoMayorStockResponse>> obtenerProductoMayorStockPorSucursal(int idFranquicia)
+            throws FranquiciaServiceException;
+
+    ResponseEntity<ActualizarFranqResponse> actualizarNombreFranq(String idFranquicia, ActualizarFranqRequest body)
+            throws FranquiciaServiceException;
 
 }
