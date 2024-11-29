@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,6 +25,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "producto")
 public class Producto {
 
     @Id
@@ -39,5 +41,5 @@ public class Producto {
 
     @ManyToOne
     @JoinColumn(name = "sucursal_id", nullable = false)
-    private int sucursalId;
+    private Sucursal sucursalId;
 }
