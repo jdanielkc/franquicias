@@ -1,0 +1,15 @@
+services:
+  prueba-tecnica-api:
+    image: prueba-tecnica-api
+    container_name: spring-franquicia-api
+    ports:
+      - "8080:8080"
+    networks:
+      - spring-networks
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://prueba-accenture.c7i4io808cdv.us-east-2.rds.amazonaws.com:3306/accenture
+      SPRING_DATASOURCE_USERNAME: daniel
+      SPRING_DATASOURCE_PASSWORD: Pruebas123*
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+networks:
+  spring-networks:
