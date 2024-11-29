@@ -41,5 +41,5 @@ public class Producto {
 
     @ManyToOne
     @JoinColumn(name = "sucursal_id", nullable = false)
-    private Sucursal sucursalId;
+    private Sucursal sucursal;
 }

@@ -5,16 +5,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Clase que representa la respuesta de creación de una nueva franquicia
+ * Clase que representa la respuesta de creación de una nueva sucursal
  * 
  * @version 1.0
  * @autor Daniel Garcia
  * @since 2024/11/28
  */
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class NuevaFranquiciaResponse {
+@NoArgsConstructor
+public class NuevaSucursalResponse {
     private String mensaje;
-    private int idFranquicia;
+    private int idSucursal;
 }

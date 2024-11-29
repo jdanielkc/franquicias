@@ -1,11 +1,11 @@
-package com.co.accenture.franquicias.models.response;
+package com.co.accenture.franquicias.models.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Clase que representa la respuesta de creación de una nueva franquicia
+ * Clase que representa la petición de creación de una nueva sucursal
  * 
  * @version 1.0
  * @autor Daniel Garcia
@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class NuevaFranquiciaResponse {
-    private String mensaje;
+public class NuevaSucursalRequest {
+    private String nombre;
     private int idFranquicia;
 }

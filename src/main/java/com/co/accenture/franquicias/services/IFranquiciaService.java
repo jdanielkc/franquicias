@@ -3,7 +3,9 @@ package com.co.accenture.franquicias.services;
 import org.springframework.http.ResponseEntity;
 
 import com.co.accenture.franquicias.models.request.NuevaFranquiciaRequest;
+import com.co.accenture.franquicias.models.request.NuevaSucursalRequest;
 import com.co.accenture.franquicias.models.response.NuevaFranquiciaResponse;
+import com.co.accenture.franquicias.models.response.NuevaSucursalResponse;
 
 /**
  * Interfaz servicio de la franquicia
@@ -13,5 +15,7 @@ import com.co.accenture.franquicias.models.response.NuevaFranquiciaResponse;
  */
 public interface IFranquiciaService {
     ResponseEntity<NuevaFranquiciaResponse> addFranquicia(NuevaFranquiciaRequest body);
+
+    ResponseEntity<NuevaSucursalResponse> addSucursal(NuevaSucursalRequest request);
 
 }

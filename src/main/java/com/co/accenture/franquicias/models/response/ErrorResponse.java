@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Clase que representa la respuesta de creación de una nueva franquicia
+ * Clase que representa la respuesta de error
  * 
  * @version 1.0
  * @autor Daniel Garcia
@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class NuevaFranquiciaResponse {
+public class ErrorResponse {
     private String mensaje;
-    private int idFranquicia;
+    private String mensaje2;
 }
