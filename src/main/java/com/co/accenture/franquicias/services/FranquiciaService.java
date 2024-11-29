@@ -14,12 +14,14 @@ import com.co.accenture.franquicias.entities.Sucursal;
 import com.co.accenture.franquicias.exceptions.FranquiciaServiceException;
 import com.co.accenture.franquicias.exceptions.NombreDuplicadoException;
 import com.co.accenture.franquicias.models.request.ActualizarFranqRequest;
+import com.co.accenture.franquicias.models.request.ActualizarProdRequest;
 import com.co.accenture.franquicias.models.request.ActualizarStockRequest;
 import com.co.accenture.franquicias.models.request.ActualizarSucuResquest;
 import com.co.accenture.franquicias.models.request.NuevaFranquiciaRequest;
 import com.co.accenture.franquicias.models.request.NuevaSucursalRequest;
 import com.co.accenture.franquicias.models.request.NuevoProductoRequest;
 import com.co.accenture.franquicias.models.response.ActualizarFranqResponse;
+import com.co.accenture.franquicias.models.response.ActualizarProdResponse;
 import com.co.accenture.franquicias.models.response.ActualizarStockResponse;
 import com.co.accenture.franquicias.models.response.ActualizarSucuResponse;
 import com.co.accenture.franquicias.models.response.BorrarProductoResponse;
@@ -197,7 +199,7 @@ public class FranquiciaService implements IFranquiciaService {
         StringBuilder mensaje = new StringBuilder();
         mensaje.append("El stock del producto ");
         mensaje.append(producto.getNombre());
-        mensaje.append(" ha sido actualizado a ");
+        mensaje.append(" fue sido actualizado a ");
         mensaje.append(producto.getStock());
         return ResponseEntity.status(HttpStatus.OK).body(new ActualizarStockResponse(mensaje.toString()));
     }
@@ -245,7 +247,7 @@ public class FranquiciaService implements IFranquiciaService {
         StringBuilder mensaje = new StringBuilder();
         mensaje.append("El nombre de la franquicia ");
         mensaje.append(nombreAnterior);
-        mensaje.append(" ha sido actualizado a ");
+        mensaje.append(" fue sido actualizado a ");
         mensaje.append(franquicia.getNombre());
         return ResponseEntity.status(HttpStatus.OK).body(new ActualizarFranqResponse(mensaje.toString()));
     }
@@ -277,5 +279,34 @@ public class FranquiciaService implements IFranquiciaService {
         mensaje.append(" ha sido actualizado a ");
         mensaje.append(sucursal.getNombre());
         return ResponseEntity.status(HttpStatus.OK).body(new ActualizarSucuResponse(mensaje.toString()));
+    }
+
+    /**
+     * Método que permite actualizar el nombre de un producto
+     * 
+     * @param id
+     * @param body
+     * @return ResponseEntity<ActualizarProdResponse>
+     * @throws FranquiciaServiceException
+     */
+    @Override
+    @Transactional
+    public ResponseEntity<ActualizarProdResponse> actualizarNombreProd(String id, ActualizarProdRequest body) throws FranquiciaServiceException {
+        
+        // Obtener producto por id
+        Producto producto = productoRepository.findById(Integer.parseInt(id))
+                .orElseThrow(() -> new FranquiciaServiceException("El producto a actualizar no existe", "El producto a actualizar no existe"));
+        String nombreAnterior = producto.getNombre();
+
+        // Actualizar nombre
+        producto.setNombre(body.getNuevoNombre());
+        productoRepository.save(producto);
+
+        StringBuilder mensaje = new StringBuilder();
+        mensaje.append("El nombre del producto ");
+        mensaje.append(nombreAnterior);
+        mensaje.append(" ha sido actualizado a ");
+        mensaje.append(producto.getNombre());
+        return ResponseEntity.status(HttpStatus.OK).body(new ActualizarProdResponse(mensaje.toString()));
     }
 }
