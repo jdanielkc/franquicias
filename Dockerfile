@@ -22,4 +22,4 @@ COPY ./src /root/src
 RUN ./mvnw clean install -DskipTests
 
 # LEVANTANDO NUESTRA APLICACION
-ENTRYPOINT [ "java", "-jar", "/root/target/franquicias-1.1.1.jar" ]
+ENTRYPOINT [ "java", "-jar", "/root/target/franquicias-1.2.0.jar" ]
