@@ -1,7 +1,10 @@
 package com.co.accenture.franquicias.controllers;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +21,7 @@ import com.co.accenture.franquicias.models.response.BorrarProductoResponse;
 import com.co.accenture.franquicias.models.response.NuevaFranquiciaResponse;
 import com.co.accenture.franquicias.models.response.NuevaSucursalResponse;
 import com.co.accenture.franquicias.models.response.NuevoProductoResponse;
+import com.co.accenture.franquicias.models.response.ProductoMayorStockResponse;
 import com.co.accenture.franquicias.services.IFranquiciaService;
 
 import lombok.AllArgsConstructor;
@@ -105,4 +109,17 @@ public class FranquiciaController {
         return franquiciaService.actualizarStock(idProducto, body);
     }
 
+    /**
+     * Método que permite obtener el producto con mayor stock por sucursal para una
+     * franquicia específica
+     * 
+     * @param idFranquicia
+     * @return ResponseEntity<List<ProductoMayorStockResponse>>
+     * @throws FranquiciaServiceException
+     */
+    @GetMapping("/franquicia/{idFranquicia}/producto-mayor-stock")
+    public ResponseEntity<List<ProductoMayorStockResponse>> obtenerProductoMayorStockPorSucursal(
+            @PathVariable int idFranquicia) throws FranquiciaServiceException {
+        return franquiciaService.obtenerProductoMayorStockPorSucursal(idFranquicia);
+    }
 }
